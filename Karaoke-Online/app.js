@@ -21,6 +21,8 @@ app.get('/',(req,res)=>{
     res.render('home')
 });
 
+
+
 app.use('/search', require('./routes/Search.route'));
 
 app.listen(3000,()=>{
