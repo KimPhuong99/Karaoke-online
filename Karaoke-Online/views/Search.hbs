@@ -28,7 +28,7 @@
   function makeRequest() {
 
 
-    var key = $('#keyword').val();
+    var key = $('#keyword').val()+' karaoke';
     var request = gapi.client.youtube.search.list({
       q: key,
       part: 'snippet',

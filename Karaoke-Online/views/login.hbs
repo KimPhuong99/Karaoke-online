@@ -41,12 +41,11 @@
       <form class="text-center border border-light p-5" action="/login" method="POST">
 
         <h2 class="h2 mb-4">Sign in</h2>
-       
-       <div class="alert alert-danger">
-        {{#each messages}}
-           <p>{{this}}</p>
-        {{/each}}   
+        {{#if message}}
+        <div class="alert alert-danger">
+           <p>{{message}}</p>
         </div>
+        {{/if }}
       
         <div class="form-group">
           <div class="input-group">
@@ -93,7 +92,7 @@
         <!-- Social login -->
         <p>or sign in with:</p>
 
-        <a href="#" class="mx-2" role="button"><i class="fa fa-facebook-f light-blue-text"></i></a>
+        <a href="#" class="mx-2" role="button"><i class="fa fa-google"></i></a>
     </div>
 
 
