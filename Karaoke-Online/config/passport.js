@@ -29,7 +29,7 @@ module.exports = function (passport) {
     passport.use(
         'local-signup',
         new LocalStrategy(
-            {
+            {   
                 usernameField :'username',
                 passwordField: 'password',
                 passReqToCallback : true
@@ -42,18 +42,20 @@ module.exports = function (passport) {
                                         username: username
                                         }
                                     }).then(function(user) {
-                if (user) 
-                {       console.log("That is already taken");
+                 if (user) 
+                 {       
                         return done(null, false, {message: req.flash('signupMessage','Tên đăng nhập đã tồn tại')});
                  } else
  
                  {
+
+                    
                      var userPassword = bcrypt.hashSync(password,bcrypt.genSaltSync(8),null);
  
                      var data =
  
                     {
-                         username: username,
+                        username: username,
  
                         password: userPassword,
  
@@ -69,17 +71,21 @@ module.exports = function (passport) {
                         User.create(data).then(function(newUser, created) {
  
                         if (!newUser) {
-                        console.log("Failed in adding new acc");
+                        
                         return done(null, false,{message: req.flash('signupMessage','Tạo tài khoản không thành công')});
                          }
  
                          if (newUser) {
-                                console.log("Success in adding new acc");
+                                
                                 return done(null, newUser,{message: req.flash('sigupMessage','Tạo tài khoản thành công')});
  
                          }
  
                         })
+                                         
+                                     
+
+                    
  
                       }
  
@@ -107,7 +113,7 @@ module.exports = function (passport) {
                      }
                  }).then(function (user) {
                      if(!user){
-                         console.log("No User Found");
+                          console.log("No User Found");
                           return done(null, false, {message: req.flash('loginMessage','Tài khoản chưa đăng ký')});
                      }
                     

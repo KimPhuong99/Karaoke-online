@@ -67,19 +67,53 @@
     <main>
     <div class="profile">
       <div class="container profile-header-background text-center">
-        <div class="avatar margin view overlay">   
-          <div class="mask flex-center rgba-red-strong">
-            <img src="/img/blank-profile-picture-973460_640.png" alt="User Avatar">
-            <a href="#"><i class="fa fa-camera" aria-hidden="true"></i></a>
-          </div>
+        <div class="margin d-flex align-items-center justify-content-center">   
+            <div class="avatar_box" >
+              <img id="avatar" class="img-circle" src="/img/blank-profile-picture-973460_640.png"  alt="User Avatar" >
+              <button id="btn_upload" type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#uploadDialog"><i class="fa fa-camera" aria-hidden="true"></i></button>
+            </div>
+            
+            <div id="uploadDialog" class="modal fade" role="dialog">
+           <div class="modal-dialog">
+
+             <div class="modal-content">
+              <div class="modal-header">
+              
+              <h4 class="modal-title" id="myModalLabel">Choose an image:</h4>
+              </div>
+              <div class="modal-body">
+              <form role="form" action="/upload" method="POST" enctype="multipart/form-data">
+             
+              <div class="form-group">
+              
+              <div class="custom-file">
+              <input type="file" class="custom-file-input" id="upload_avatar" name="Choose" accept="image/*">
+              <label class="custom-file-label" for="upload_avatar">Choose file</label>
+              </div>
+              </div>
+              <div class="image-preview">
+                <img class="img-circle" id="preview_avatar" alt="avatar" src="/img/blank-profile-picture-973460_640.png" >
+              </div>
+               <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+              </div>
+               <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+
+            </div>
+            </div>
         </div>
-        <h4 id="name" style="color:#fff; font-size: 2vw;">Miranda Kerr</h4>
-        <h5 id="username" style="color:#fff;font-size: 1.2vw;">@mirandakerr</h3>
+      
+        <h4 id="name" style="color:#fff; font-size: 2vw;">{{user.username}}</h4>
+        <h5 id="username" style="color:#fff;font-size: 1.2vw;">@{{user.username}}</h3>
         <div class="row justify-content-md-center margin">
             <div class="col-md-3 .col-md-offset-3" id="follower" style="color:#fff;">Follower 1.5K</div>  
             <div class="col-md-3" id="following" style="color:#fff;">Following 16.5M</div>
         </div>
-          <button class="btn btn-primary btn-lg" type="button">Follow</button>
+         <!-- <button class="btn btn-primary btn-lg" type="button">Follow</button>-->
           <div class="d-flex justify-content-end">
           <a href="#"><i class="fa fa-camera" aria-hidden="true"></i></a> 
           </div>
@@ -120,7 +154,7 @@
                  </div>
                <div class="username-list m-2 mr-auto d-flex align-items-start flex-column">
                    
-                   <a href="#" class="username" title="User">User</a>
+                   <a href="#" class="username" title="User">{{user.username}}</a>
                    
                    <div class="user-info-more">
                          <span class="date-post"><small>31/01/2020</small></span>
@@ -139,16 +173,17 @@
                </div>
               <div class="article-body d-flex align-items-start flex-column">
                   <div class="content">
-                    Đình Dũng - 'Đừng Nói' M/V
+                    Status
                   </div>
                   
                   <div class="item-news d-flex flex-wrap flex-column">
-                    <div class="embed-responsive embed-responsive-16by9 p-2">                                       
-                      <iframe class="embed-responsive-item" src="/https://www.youtube.com/embed/3BbcScOuCns" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        
+                   
+                    <div class="player p-2">
+                       <audio controls>
+                           <source src="test.mp3" type="audio/ogg">
+                       </audio>
+                      <span class="linksong-tiltle" style="font-weight: 1.5vw; color: #000;">Name Song</span>
                     </div>
-                    <a href="https://www.youtube.com/embed/3BbcScOuCns" class="p-2">
-                      <span class="linksong-tiltle" style="font-weight: 300; color: #fff;">Đình Dũng - 'Đừng Nói' M/V</span>
-                    </a>
                   </div>
                </div>
              <div class="article-foot">
@@ -350,23 +385,23 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <form>
+                            <form action="update" method="POST">
                                   <div class="form-group row">
-                                    <label for="username" class="col-4 col-form-label">User Name*</label> 
+                                    <label for="username" class="col-4 col-form-label">User Name</label> 
                                     <div class="col-8">
-                                      <input id="username" name="username" placeholder="Username" class="form-control here" required="required" type="text">
+                                      <input id="username" name="username" placeholder="Username" class="form-control here" type="text" value={{user.username}}>
                                     </div>
                                   </div>
                                   <div class="form-group row">
                                     <label for="email" class="col-4 col-form-label">Email</label> 
                                     <div class="col-8">
-                                      <input id="email" name="email" placeholder="Email" class="form-control here"  type="text">
+                                      <input id="email" name="email" placeholder="Email" class="form-control here"  type="text" value={{user.email}}>
                                     </div>
                                   </div>
                                   <div class="form-group row">
-                                    <label for="phone" class="col-4 col-form-label">Phone Number*</label> 
+                                    <label for="phone" class="col-4 col-form-label">Phone Number</label> 
                                     <div class="col-8">
-                                      <input id="phone" name="phone" placeholder="Phone" class="form-control here" required="required" type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                                      <input id="phone" name="phone" placeholder="Phone" class="form-control here" type="tel"value={{user.phone}}>
                                     </div>
                                   </div>
                                   <div class="form-group row">
@@ -430,18 +465,35 @@
        }
  
        $('.tm-current-year').text(new Date().getFullYear());  // Update year in copyright
+      
+      
+           
+            $(".custom-file-input").on("change", function(e) {
+             
+               $("#preview_avatar").css('opacity', 1);
+               
+               const file = e.target.files[0];
+               if(file){
+
+                 const reader = new FileReader();
+                 reader.addEventListener("load",function()
+                 {
+                      $("#preview_avatar").attr("src",this.result);
+                 });
+                  
+                  reader.readAsDataURL(file);
+             
+              var fileName = $(this).val().split("\\").pop();
+              $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+               }
+            });
+           
+       
      });
  
    </script>
-  <script>
-    function on() {
-      document.getElementById("overlay").style.display = "block";
-    }
-    
-    function off() {
-      document.getElementById("overlay").style.display = "none";
-    }
-  </script>
+  
 </body>
 
 </html>

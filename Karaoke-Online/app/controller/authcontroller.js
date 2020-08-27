@@ -1,6 +1,9 @@
 var exports = module.exports = {}
  
 exports.signup = function(req, res) {
+   if (req.isAuthenticated())    
+        res.render('home');
+    else   
     res.render('signup', { layout:false, message: req.flash('signupMessage')});
 }
 
@@ -9,6 +12,9 @@ exports.dashboard = function(req, res) {
 }
 
 exports.login = function(req, res) {
+    if (req.isAuthenticated())    
+        res.render('home');
+    else 
     res.render('login',{ layout:false , message: req.flash('loginMessage')});
 }
 

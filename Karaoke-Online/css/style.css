@@ -6,6 +6,9 @@ body {
     overflow-x: hidden;
 }
 
+
+
+
 a { transition: all 0.3s ease; }
 a:hover, a:focus, a.active {
     color: #58d5ff;
@@ -55,14 +58,6 @@ a:hover, a:focus, a.active {
 .container {
     padding-top: 10px;
     padding-bottom: 5px;
-}
-
-.avatar img{
-    vertical-align: middle;
-    border-radius: 50%;
-    max-width:120px;
-    height:auto;
-    border: 2px solid white;
 }
 
 
@@ -140,7 +135,11 @@ a:hover, a:focus, a.active {
 }
 
 .user-avatar img{
-    max-width: 60px;
+    vertical-align: middle;
+    border-radius: 50%;
+    width:60px;
+    height:60px;
+    border: 2px solid white;
     padding: 5px;
 }
 
@@ -1238,3 +1237,4 @@ iframe { max-width: 100%; }
 .login-form form p {
     font-size:small;
 }
+

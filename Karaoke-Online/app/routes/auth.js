@@ -9,6 +9,16 @@ module.exports = function(app,passport) {
         res.redirect('login');
     }
 
+    function reqSing(req,res)
+    {  
+        const id=req.params.id;
+        res.render('Sing',{
+        id : id
+        })
+        
+    } 
+
+
     app.get('/signup', authController.signup);
 
     app.get ('/login', authController.login);
@@ -17,7 +27,7 @@ module.exports = function(app,passport) {
     
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/',
-        failureRedirect: 'login',
+        failureRedirect: 'signup',
         failureFlash : true
     }));
     app.post('/login', passport.authenticate('local-login', {
@@ -32,7 +42,9 @@ module.exports = function(app,passport) {
    
     app.get('/search', isLoggedIn , authController.search);
 
-    app.get('/sing/:id', isLoggedIn, authController.sing);
+
+    app.get('/sing/:id', isLoggedIn, reqSing);
+    app.get('/search/sing/:id',isLoggedIn,reqSing);
     
     app.get('/about', isLoggedIn , authController.about);
 
