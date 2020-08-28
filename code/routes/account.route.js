@@ -17,12 +17,12 @@ function readFiles(dirname, onFileContent, onError) {
     });
 }
 
-router.get('/signin', async (req, res) => {
-    res.render('account/signin', {
+router.get('/signup', async (req, res) => {
+    res.render('account/signup', {
         layout: false
     });
 });
-router.post('/signin', async (req, res) => {
+router.post('/signup', async (req, res) => {
     const N = 10;
     const hash = bcrypt.hashSync(req.body.password, N);
     const entity = req.body;
@@ -33,7 +33,7 @@ router.post('/signin', async (req, res) => {
     const result = await userModel.add(entity);
     var dir = './user/' + entity.ID;
     fs.mkdirSync(dir);
-    res.render('account/signin', {
+    res.render('account/signup', {
         layout: false
     });
 })
@@ -82,7 +82,7 @@ router.get('/profile', async (req, res) => {
         throw err;
     })
     const user = await song_userModel.single(req.session.authUser.ID);
-   console.log(user);
+    console.log(user);
     res.render('account/profile', {
         file: user
     })

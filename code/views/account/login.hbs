@@ -42,11 +42,13 @@
 
                 <h2 class="h2 mb-4">Sign in</h2>
 
-                <div class="alert alert-danger">
-                    {{#each messages}}
-                    <p>{{this}}</p>
-                    {{/each}}
-                </div>
+               
+                    {{#if message}}
+                    <div class="alert alert-danger">
+                    <p>{{message}}</p>
+                     </div>
+                    {{/if }}   
+              
 
                 <div class="form-group">
                     <div class="input-group">
@@ -89,7 +91,7 @@
 
                 <!-- Register -->
                 <p>Not a member?
-                    <a href="http://localhost:3000/signup">Register</a>
+                    <a href="/account/signup">Register</a>
                 </p>
 
                 <!-- Social login -->

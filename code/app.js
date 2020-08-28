@@ -1,5 +1,6 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
+var flash = require('connect-flash');
 const path = require('path');
 const session = require('express-session');
 const hbs_sections = require('express-handlebars-sections');

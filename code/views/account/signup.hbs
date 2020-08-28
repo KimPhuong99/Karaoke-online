@@ -40,11 +40,11 @@
 		<p>Please fill in this form to create an account!</p>
 		<hr>
 		
+        {{#if message}}
          <div class="alert alert-danger">
-        {{#each messages}}
-           <p>{{this}}</p>
-        {{/each}}   
-        </div>      
+           <p>{{message}}</p>
+         </div>
+         {{/if }}   
         <div class="form-group">
 			<div class="input-group">
 				<div class="input-group-prepend">
