@@ -3,9 +3,18 @@ var bcrypt = require('bcryptjs');
 const userModel = require('../models/user_model');
 const song_userModel = require('../models/songuser_model');
 const restrict = require('../middlewares/auth.mdw');
+
+const multer = require('multer');
+var path = require('path');
+
+
+
+
 var mkdirp = require('mkdirp');
+var path= require('path');
 const router = express.Router();
 var fs = require('fs');
+var util=require('util');
 
 function readFiles(dirname, onFileContent, onError) {
     fs.readdir(dirname, function (err, filenames) {
@@ -30,12 +39,27 @@ router.post('/signin', async (req, res) => {
     const rows = await userModel.all();
     entity.password = hash;
     entity.ID = rows.length + 1;
+
+    const kt1 = await userModel.singleByUsername(entity.username);
+    const kt2 = await userModel.singleByMail(entity.email);
+
+    if(kt1!=null){
+        return res.render('account/signin', {
+            layout: false,
+            err_message: 'the same username'
+          });
+    }
+
+    if(kt2!=null){
+        return res.render('account/signin', {
+            layout: false,
+            err_message: 'the same email'
+          });
+    }
     const result = await userModel.add(entity);
-    var dir = './user/' + entity.ID;
+    var dir = './public/user/' + entity.ID;
     fs.mkdirSync(dir);
-    res.render('account/signin', {
-        layout: false
-    });
+    res.redirect('/account/login');
 })
 router.get('/login', async (req, res) => {
     res.render('account/login', {
@@ -46,7 +70,10 @@ router.get('/login', async (req, res) => {
 router.post('/login', async (req, res) => {
     const user = await userModel.singleByUsername(req.body.username);
     if (user === null) {
-        throw new Error('Invalid username or password.');
+        return res.render('account/login', {
+            layout: false,
+            err_message: 'Invalid username '
+        });
     }
 
     const rs = bcrypt.compareSync(req.body.password, user.password);
@@ -60,10 +87,11 @@ router.post('/login', async (req, res) => {
     delete user.password;
     req.session.isAuthenticated = true;
     req.session.authUser = user;
-    res.locals.isAuthenticated = req.session.isAuthenticated;
-    res.locals.authUser = req.session.authUser;
+    //res.locals.isAuthenticated = req.session.isAuthenticated;
+    //res.locals.authUser = req.session.authUser;
 
     const url = req.query.retUrl || '/';
+   
     res.redirect(url);
 })
 
@@ -71,7 +99,8 @@ router.get('/profile', async (req, res) => {
 
     var data = [];
 
-    await readFiles('user/' + req.session.authUser.ID + '/', await function (filename, content) {
+   var filename  = "l";
+     readFiles('./public/user/' + req.session.authUser.ID + '/',  function (filename, content) {
 
         data.push({
             name: filename,
@@ -81,11 +110,19 @@ router.get('/profile', async (req, res) => {
     }, function (err) {
         throw err;
     })
+    console.log(data);
     const user = await song_userModel.single(req.session.authUser.ID);
-   console.log(user);
-    res.render('account/profile', {
-        file: user
+    console.log(user);
+   
+    // We replaced all the event handlers with a simple call to util.pump()
+    res.render('./account/profile',{
+        
+        u : user
     })
+
+})
+
+router.get('/account/profile/image', async (req, res)=>{
 
 })
 

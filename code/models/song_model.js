@@ -16,6 +16,7 @@ module.exports = {
         const condition = { id_bai_hat: entity.id_bai_hat };
         delete entity.id_bai_hat;
         return db.patch('song', entity, condition);
-      }
+      },
+    
 
 }

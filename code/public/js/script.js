@@ -116,6 +116,8 @@ function stopRecording() {
 function createDownloadLink(blob) {
 	
 	var url = URL.createObjectURL(blob);
+	
+	
 	var au = document.createElement('audio');
 	var li = document.createElement('li');
 	var input=document.createElement('input');
@@ -125,13 +127,13 @@ function createDownloadLink(blob) {
 	form.method="POST";
 	form.enctype="multipart/form-data";
 	input.type="submit";
+	input.va="Gui di";
 	
-	form.appendChild(input);
+	
 	li.className="d-flex justify-content-center d-flex flex-column bd-highlight mb-3";
-	//name of .wav file to use during upload and download (without extendion)
 	var filename = new Date().toISOString();
 
-	//add controls to the <audio> element
+
 	au.controls = true;
 	var source= document.createElement('source');
 	source.src=url;
@@ -144,11 +146,7 @@ function createDownloadLink(blob) {
 	au.appendChild(source);
 	li.appendChild(link);
 	form.appendChild(au);
-	li.appendChild(document.createTextNode(filename+".wav "));
+	li.appendChild(document.createTextNode(filename+".mp3 "));
 	li.appendChild(form);
-
-
-
-	//add the li element to the ol
 	recordingsList.appendChild(li);
 }
