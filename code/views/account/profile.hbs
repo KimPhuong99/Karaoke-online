@@ -65,6 +65,7 @@
 <main>
   <div class="profile">
     <div class="container profile-header-background text-center">
+<<<<<<< HEAD
       <div class="avatar margin view overlay">
         <div class="mask flex-center rgba-red-strong">
           <img src="/img/blank-profile-picture-973460_640.png" alt="User Avatar">
@@ -84,8 +85,47 @@
             </div>
 
           </div>
+=======
+       <div class="margin d-flex align-items-center justify-content-center">   
+            <div class="avatar_box" >
+              <img id="avatar" class="img-circle" src="/img/blank-profile-picture-973460_640.png"  alt="User Avatar" >
+              <button id="btn_upload" type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#uploadDialog"><i class="fa fa-camera" aria-hidden="true"></i></button>
+            </div>
+            
+            <div id="uploadDialog" class="modal fade" role="dialog">
+           <div class="modal-dialog">
+
+             <div class="modal-content">
+              <div class="modal-header">
+              
+              <h4 class="modal-title" id="myModalLabel">Choose an image:</h4>
+              </div>
+              <div class="modal-body">
+              <form role="form" action="/upload" method="POST" enctype="multipart/form-data">
+             
+              <div class="form-group">
+              
+              <div class="custom-file">
+              <input type="file" class="custom-file-input" id="upload_avatar" name="Choose" accept="image/*">
+              <label class="custom-file-label" for="upload_avatar">Choose file</label>
+              </div>
+              </div>
+              <div class="image-preview">
+                <img class="img-circle" id="preview_avatar" alt="avatar" src="/img/blank-profile-picture-973460_640.png" >
+              </div>
+               <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+              </div>
+               <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+
+            </div>
+            </div>
+>>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71
         </div>
-      </div>
       <h4 id="name" style="color:#fff; font-size: 2vw;">{{authUser.username}}</h4>
       <h5 id="username" style="color:#fff;font-size: 1.2vw;">@{{authUser.username}}</h3>
         <div class="row justify-content-md-center margin">
@@ -460,7 +500,7 @@
                         <div class="form-group row">
                           <label for="facebook" class="col-4 col-form-label">Facebook</label>
                           <div class="col-8">
-                            <button type="button" class="btn btn-fb"><i class="fab fa-facebook-f pr-1"></i>
+                            <button type="button" class="btn btn-fb"><i class="fa fa-facebook-f pr-1"></i>
                               Facebook</button>
                           </div>
                         </div>
@@ -483,6 +523,7 @@
     </div>
   </div>
 </main>
+<<<<<<< HEAD
 
 {{#section 'script'}}
 <script>
@@ -513,3 +554,34 @@
   }
 </script>
 {{/section}}
+=======
+  <script>
+ 
+     /* DOM is ready
+     ------------------------------------------------*/
+            $(".custom-file-input").on("change", function(e) {
+             
+               $("#preview_avatar").css('opacity', 1);
+               
+               const file = e.target.files[0];
+               if(file){
+
+                 const reader = new FileReader();
+                 reader.addEventListener("load",function()
+                 {
+                      $("#preview_avatar").attr("src",this.result);
+                 });
+                  
+                  reader.readAsDataURL(file);
+             
+              var fileName = $(this).val().split("\\").pop();
+              $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+               }
+            });
+           
+       
+     });
+ 
+   </script>
+>>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71

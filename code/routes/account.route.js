@@ -26,12 +26,12 @@ function readFiles(dirname, onFileContent, onError) {
     });
 }
 
-router.get('/signin', async (req, res) => {
-    res.render('account/signin', {
+router.get('/signup', async (req, res) => {
+    res.render('account/signup', {
         layout: false
     });
 });
-router.post('/signin', async (req, res) => {
+router.post('/signup', async (req, res) => {
     const N = 10;
     const hash = bcrypt.hashSync(req.body.password, N);
     const entity = req.body;
@@ -59,7 +59,13 @@ router.post('/signin', async (req, res) => {
     const result = await userModel.add(entity);
     var dir = './public/user/' + entity.ID;
     fs.mkdirSync(dir);
+<<<<<<< HEAD
     res.redirect('/account/login');
+=======
+    res.render('account/signup', {
+        layout: false
+    });
+>>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71
 })
 router.get('/login', async (req, res) => {
     res.render('account/login', {
@@ -113,11 +119,16 @@ router.get('/profile', async (req, res) => {
     console.log(data);
     const user = await song_userModel.single(req.session.authUser.ID);
     console.log(user);
+<<<<<<< HEAD
    
     // We replaced all the event handlers with a simple call to util.pump()
     res.render('./account/profile',{
         
         u : user
+=======
+    res.render('account/profile', {
+        file: user
+>>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71
     })
 
 })
