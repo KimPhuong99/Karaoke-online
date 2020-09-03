@@ -22,6 +22,7 @@ http://www.tooplate.com/view/2101-insertion
   <link rel="stylesheet" href="/css/carousel.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css" />
    {{{_sections.css}}}
+   {{{_sections.js}}}
   <script>
     var renderPage = true;
 
@@ -55,7 +56,7 @@ http://www.tooplate.com/view/2101-insertion
             <nav class="navbar navbar-expand-sm">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a href="http://localhost:3000" class="nav-link tm-nav-link tm-text-white active">Home</a>
+                  <a href="http://localhost:3000" class="nav-link tm-nav-link tm-text-white ">Home</a>
                 </li>
                 <li class="nav-item">
                   <a href="http://localhost:3000/search" class="nav-link tm-nav-link tm-text-white">Search</a>
@@ -65,7 +66,7 @@ http://www.tooplate.com/view/2101-insertion
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    Hi, <b>{{authUser.username}}!</b>
+                    Hi, <b> {{authUser.username}}</b>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/account/profile">

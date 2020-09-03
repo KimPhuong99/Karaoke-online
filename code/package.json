@@ -11,11 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-<<<<<<< HEAD
-    "body-parse": "^0.1.0",
-=======
     "connect-flash": "^0.1.1",
->>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71
     "express": "^4.17.1",
     "express-handlebars": "^5.1.0",
     "express-handlebars-sections": "^1.0.1",

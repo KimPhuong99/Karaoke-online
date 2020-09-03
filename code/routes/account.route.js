@@ -8,13 +8,33 @@ const multer = require('multer');
 var path = require('path');
 
 
+var storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, './public/user/'+req.session.authUser.ID)
+    },
+    filename: async function(req, file, callback) {
+        //callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+                //callback(null, file.originalname)
+        //rand=Date.now() + path.extname(file.originalname);
 
+        const row = await userModel.single(req.session.authUser.ID);
+        
+        var im = row[0].image+1;
+        var image = im.toString();
+        callback(null, "image"+image+".png");
+  
+    }
+  
+  })
+  var upload = multer({
+    storage: storage});
 
 var mkdirp = require('mkdirp');
 var path= require('path');
 const router = express.Router();
 var fs = require('fs');
 var util=require('util');
+const e = require('express');
 
 function readFiles(dirname, onFileContent, onError) {
     fs.readdir(dirname, function (err, filenames) {
@@ -39,19 +59,19 @@ router.post('/signup', async (req, res) => {
     const rows = await userModel.all();
     entity.password = hash;
     entity.ID = rows.length + 1;
-
+    entity.image=0;
     const kt1 = await userModel.singleByUsername(entity.username);
     const kt2 = await userModel.singleByMail(entity.email);
 
     if(kt1!=null){
-        return res.render('account/signin', {
+        return res.render('account/signup', {
             layout: false,
             err_message: 'the same username'
           });
     }
 
     if(kt2!=null){
-        return res.render('account/signin', {
+        return res.render('account/signup', {
             layout: false,
             err_message: 'the same email'
           });
@@ -59,13 +79,7 @@ router.post('/signup', async (req, res) => {
     const result = await userModel.add(entity);
     var dir = './public/user/' + entity.ID;
     fs.mkdirSync(dir);
-<<<<<<< HEAD
     res.redirect('/account/login');
-=======
-    res.render('account/signup', {
-        layout: false
-    });
->>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71
 })
 router.get('/login', async (req, res) => {
     res.render('account/login', {
@@ -96,7 +110,7 @@ router.post('/login', async (req, res) => {
     //res.locals.isAuthenticated = req.session.isAuthenticated;
     //res.locals.authUser = req.session.authUser;
 
-    const url = req.query.retUrl || '/';
+    const url = "/";
    
     res.redirect(url);
 })
@@ -116,24 +130,70 @@ router.get('/profile', async (req, res) => {
     }, function (err) {
         throw err;
     })
-    console.log(data);
     const user = await song_userModel.single(req.session.authUser.ID);
-    console.log(user);
-<<<<<<< HEAD
+    const userInfo = await userModel.single(req.session.authUser.ID);
+    const image = userInfo[0].image;
    
     // We replaced all the event handlers with a simple call to util.pump()
+    
     res.render('./account/profile',{
-        
+        userInfo: image,
         u : user
-=======
-    res.render('account/profile', {
-        file: user
->>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71
     })
 
 })
 
-router.get('/account/profile/image', async (req, res)=>{
+router.post('/profile', async (req,res)=>{
+
+    const entity = req.body;
+    console.log(req.body);
+    const N = 10;
+    const hash = bcrypt.hashSync(req.body.pass, N);
+    entity.password=hash;
+    entity.username = entity.namename;
+    delete entity.namename;
+    delete entity.pass;
+    const rows= await userModel.single(req.session.authUser.ID);
+    entity.image = rows[0].image;
+    entity.ID=rows[0].ID;
+    delete entity.submit;
+    const kt1 = await userModel.singleByUsername(entity.username);
+    const kt2 = await userModel.singleByMail(entity.email);
+
+    if(kt1!=null){
+        return res.render('account/profile', {
+            layout: false,
+            err_message: 'the same username'
+          });
+    }
+
+    if(kt2!=null){
+        return res.render('account/profile', {
+            layout: false,
+            err_message: 'the same email'
+          });
+    }
+
+    
+
+    const result = userModel.patch(entity);
+    res.redirect('/account/login');
+})
+
+router.post('/profile/image', upload.single('Image'), async (req, res)=>{
+
+    const entity = await userModel.single(req.session.authUser.ID);
+    entity[0].image = entity[0].image +1;
+    const result = await userModel.patch(entity[0]);
+    console.log(result);
+
+    const user = await song_userModel.single(req.session.authUser.ID);
+    const userInfo = await userModel.single(req.session.authUser.ID);
+    const image = userInfo[0].image;
+    
+    const url = req.query.retUrl || '/';
+   
+    res.redirect(url);
 
 })
 

@@ -62,70 +62,67 @@
   }
 </style>
 {{/section}}
+{{#section 'js'}}
+<script>
+  $('#Image').fileinput({
+    theme: 'fa',
+    dropZoneEnabled: false,
+    allowedFileExtensions: ['png', 'jpg', 'gif'],
+  });
+
+  function validateForm() {
+    var name = document.getElementById('namename').value;
+    var mail = document.getElementById('email').value;
+    var sdt = document.getElementById('phone').value;
+    var pass = document.getElementById('pass').value;
+
+    alert(name);
+    if (name.length === 0 || mail.length === 0 || sdt.length === 0 || pass.length === 0 || cfp.length === 0) {
+      alert("Lack of information!");
+      return false;
+    }
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (mailmatch(mailformat) === false) {
+      alert("Incorect email!!!");
+      return false;
+    }
+    return true;
+  }
+</script>
+{{/section}}
 <main>
   <div class="profile">
     <div class="container profile-header-background text-center">
-<<<<<<< HEAD
       <div class="avatar margin view overlay">
         <div class="mask flex-center rgba-red-strong">
+          <script>
+
+          </script>
+          {{#if this.userInfo}}
+
+          <img src="/user/{{authUser.ID}}/image{{this.userInfo}}.png" alt="User Avatar">
+
+          {{else}}
           <img src="/img/blank-profile-picture-973460_640.png" alt="User Avatar">
-
-
+          {{/if}}
 
           <button id="myBtn"><i class="fa fa-camera" aria-hidden="true"></i></button>
           <div id="myModal" class="modal">
 
             <!-- Modal content -->
             <div class="modal-content">
-              <form id="uploadForm" action="/account/profile/image" method="post">
-                <input type="file" name="Image" />
+              <span style="float: right" class="close">&times;</span>
+              <form id="uploadForm" action="/account/profile/image" method="post" novalidate
+                enctype="multipart/form-data">
+                <input type="file" id="Image" name="Image" />
                 <input type="submit" value="Upload File" name="submit">
 
               </form>
             </div>
 
           </div>
-=======
-       <div class="margin d-flex align-items-center justify-content-center">   
-            <div class="avatar_box" >
-              <img id="avatar" class="img-circle" src="/img/blank-profile-picture-973460_640.png"  alt="User Avatar" >
-              <button id="btn_upload" type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#uploadDialog"><i class="fa fa-camera" aria-hidden="true"></i></button>
-            </div>
-            
-            <div id="uploadDialog" class="modal fade" role="dialog">
-           <div class="modal-dialog">
-
-             <div class="modal-content">
-              <div class="modal-header">
-              
-              <h4 class="modal-title" id="myModalLabel">Choose an image:</h4>
-              </div>
-              <div class="modal-body">
-              <form role="form" action="/upload" method="POST" enctype="multipart/form-data">
-             
-              <div class="form-group">
-              
-              <div class="custom-file">
-              <input type="file" class="custom-file-input" id="upload_avatar" name="Choose" accept="image/*">
-              <label class="custom-file-label" for="upload_avatar">Choose file</label>
-              </div>
-              </div>
-              <div class="image-preview">
-                <img class="img-circle" id="preview_avatar" alt="avatar" src="/img/blank-profile-picture-973460_640.png" >
-              </div>
-               <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-
-              </div>
-               <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-                </div>
-
-            </div>
-            </div>
->>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71
         </div>
+      </div>
       <h4 id="name" style="color:#fff; font-size: 2vw;">{{authUser.username}}</h4>
       <h5 id="username" style="color:#fff;font-size: 1.2vw;">@{{authUser.username}}</h3>
         <div class="row justify-content-md-center margin">
@@ -208,7 +205,7 @@
 
 
                   <span class="linksong-tiltle" style="font-weight: 300; color: #F66DCD;padding: 30px 30px 0px 0px">
-                    <audio controls src="/user/1/{{id_bai_hat}}.mp3"></audio>
+                    <audio controls src="/user/{{id_nguoi_hat}}/{{id_bai_hat}}.mp3"></audio>
                   </span>
 
 
@@ -469,12 +466,21 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-                      <form>
+
+                      {{#if err_message}}
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{err_message}}
+                      </div>
+                      {{/if}}
+
+                      <form method="POST" onsubmit="return validateForm()" action="/account/profile">
                         <div class="form-group row">
-                          <label for="username" class="col-4 col-form-label">User Name*</label>
+                          <label for="namename" class="col-4 col-form-label">Username</label>
                           <div class="col-8">
-                            <input id="username" name="username" placeholder="Username" class="form-control here"
-                              required="required" type="text">
+                            <input id="namename" name="namename" class="form-control here" type="text">
                           </div>
                         </div>
                         <div class="form-group row">
@@ -486,24 +492,17 @@
                         <div class="form-group row">
                           <label for="phone" class="col-4 col-form-label">Phone Number*</label>
                           <div class="col-8">
-                            <input id="phone" name="phone" placeholder="Phone" class="form-control here"
-                              required="required" type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                            <input id="phone" name="phone" placeholder="Phone" class="form-control here">
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="newpass" class="col-4 col-form-label">New Password</label>
                           <div class="col-8">
-                            <input id="newpass" name="newpass" placeholder="New Password" class="form-control here"
+                            <input id="pass" name="pass" placeholder="New Password" class="form-control here"
                               type="password">
                           </div>
                         </div>
-                        <div class="form-group row">
-                          <label for="facebook" class="col-4 col-form-label">Facebook</label>
-                          <div class="col-8">
-                            <button type="button" class="btn btn-fb"><i class="fa fa-facebook-f pr-1"></i>
-                              Facebook</button>
-                          </div>
-                        </div>
+                     
                         <div class="form-group row">
                           <div class="offset-4 col-8">
                             <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
@@ -523,7 +522,6 @@
     </div>
   </div>
 </main>
-<<<<<<< HEAD
 
 {{#section 'script'}}
 <script>
@@ -554,34 +552,3 @@
   }
 </script>
 {{/section}}
-=======
-  <script>
- 
-     /* DOM is ready
-     ------------------------------------------------*/
-            $(".custom-file-input").on("change", function(e) {
-             
-               $("#preview_avatar").css('opacity', 1);
-               
-               const file = e.target.files[0];
-               if(file){
-
-                 const reader = new FileReader();
-                 reader.addEventListener("load",function()
-                 {
-                      $("#preview_avatar").attr("src",this.result);
-                 });
-                  
-                  reader.readAsDataURL(file);
-             
-              var fileName = $(this).val().split("\\").pop();
-              $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-
-               }
-            });
-           
-       
-     });
- 
-   </script>
->>>>>>> 19969756a1acd1d2a2748759abe0452afee4ee71

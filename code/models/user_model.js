@@ -17,6 +17,11 @@ module.exports = {
     if (rowss.length === 0)
       return null;
     return rowss[0];
+  },
+  patch: entity => {
+    const condition = { ID: entity.ID };
+    delete entity.ID;
+    return db.patch('user', entity, condition);
   }
 
 }
