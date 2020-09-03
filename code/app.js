@@ -51,14 +51,13 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '/public')));
 app.set('view engine', 'hbs');
 
-app.get('/', (req, res) => {
-    res.render('home')
-});
-
 require('./middlewares/locals.mdw')(app);
 require('./middlewares/routes.mdw')(app);
 
 
+app.get('/', (req, res) => {
+    res.render('home')
+});
 
 
 

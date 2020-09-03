@@ -56,13 +56,33 @@ http://www.tooplate.com/view/2101-insertion
             <nav class="navbar navbar-expand-sm">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a href="http://localhost:3000" class="nav-link tm-nav-link tm-text-white ">Home</a>
+                  <a href="/" class="nav-link tm-nav-link tm-text-white ">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a href="http://localhost:3000/search" class="nav-link tm-nav-link tm-text-white">Search</a>
+                  <a href="search" class="nav-link tm-nav-link tm-text-white">Search</a>
                 </li>
                 <form id="frmLogout" method="post" action="/account/logout"></form>
                 {{#if isAuthenticated}}
+                 <li class="nav-item">
+                  <a href="/media-player" class="nav-link tm-nav-link tm-text-white">Media Player</a>
+                </li>
+                 <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle  tm-text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                     <b>Record</b>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/record/record-audio">
+                      <i class="fa fa-microphone" aria-hidden="true"></i>
+                       Audio
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/record/record-video">
+                      <i class="fa fa-video" aria-hidden="true"></i>
+                      Video
+                    </a>
+                  </div>
+                </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
